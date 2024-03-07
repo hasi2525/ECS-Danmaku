@@ -176,7 +176,7 @@ MonoBehaviour:
       y: 1175086395
       z: 2930866082
       w: 1353279793
---- !u!1 &868781725
+--- !u!1 &1275568973
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,8 +184,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 868781727}
-  - component: {fileID: 868781726}
+  - component: {fileID: 1275568975}
+  - component: {fileID: 1275568974}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -193,27 +193,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &868781726
+--- !u!114 &1275568974
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868781725}
+  m_GameObject: {fileID: 1275568973}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d35d173e43a930e4e8e5f9e32f6e20b0, type: 3}
+  m_Script: {fileID: 11500000, guid: c5a0b122a8b6bbb4c80d59aa39aa9674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHpUiPrefab: {fileID: 0}
-  targetCamera: {fileID: 1687953616}
---- !u!4 &868781727
+--- !u!4 &1275568975
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868781725}
+  m_GameObject: {fileID: 1275568973}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -364,5 +362,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1687953617}
-  - {fileID: 868781727}
   - {fileID: 290510467}
+  - {fileID: 1275568975}

@@ -32,7 +32,7 @@ public struct BulletTriggerEventJob : ITriggerEventsJob
 
     /// <summary>
     /// トリガーイベント（衝突イベント）が発生したときに実行
-    /// 弾丸と他のエンティティの衝突処理を行う
+    /// 弾と他のエンティティの衝突処理を行う
     /// </summary>
     /// <param name="triggerEvent">衝突イベントのデータ</param>
     [BurstCompile]
