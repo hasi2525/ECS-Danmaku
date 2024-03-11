@@ -12,10 +12,4 @@ public struct EnemyData : IComponentData
     public int CurrentHp;
     // ヒットが有効である残り時間
     public float NoDamageTimeLeft; 
-
-    ///// <summary>
-    ///// 敵が現在ヒットに有効かどうかを示すプロパティ
-    ///// ヒット有効時間が0より大きい場合はtrueとなり、敵は無敵状態となる
-    ///// </summary>
-    //public bool IsNoDamage => NoDamageTimeLeft > 0f;
 }

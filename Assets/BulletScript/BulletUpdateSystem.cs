@@ -11,6 +11,7 @@ using static BulletAuthoring;
 /// 指定された速度で移動させ、設定された距離を超えると自動的に破壊
 /// </summary>
 [UpdateInGroup(typeof(SimulationSystemGroup))]
+[BurstCompile]
 public partial struct BulletUpdateSystem : ISystem
 {
     private EntityQuery _entityQuery;
@@ -32,10 +33,10 @@ public partial struct BulletUpdateSystem : ISystem
         // 一時的に作成した配列を解放
         components.Dispose();
     }
-
     /// <summary>
     /// フレームごとに呼び出され、弾丸の移動と自動破壊を処理
     /// </summary>
+    /// 
     [BurstCompile]
     void ISystem.OnUpdate(ref SystemState state)
     {

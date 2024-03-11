@@ -120,4 +120,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   damage: 2
-  autoDestroyDistance: 20
+  autoDestroyDistance: 1

@@ -47,7 +47,7 @@ public partial struct BulletTriggerEventSystem : ISystem
         EntityManager entityManager = state.EntityManager;
         SimulationSingleton simulationSingleton = SystemAPI.GetSingleton<SimulationSingleton>();
 
-        // コマンドバッファの初期化
+        //EntityCommandBufferを取得
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer
         (Allocator.TempJob, PlaybackPolicy.MultiPlayback);
 
