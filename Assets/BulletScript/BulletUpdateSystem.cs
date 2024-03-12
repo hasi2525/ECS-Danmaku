@@ -8,7 +8,7 @@ using static BulletAuthoring;
 /// <summary>
 /// 弾の移動と自動破壊を処理するシステム
 /// BulletDataコンポーネントを持つすべてのエンティティに対して、
-/// 指定された速度で移動させ、設定された距離を超えると自動的に破壊
+/// 指定された速度で移動させ、設定した距離を超えると自動的に破壊
 /// </summary>
 [UpdateInGroup(typeof(SimulationSystemGroup))]
 [BurstCompile]

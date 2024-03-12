@@ -25,7 +25,7 @@ public class BulletAuthoring : MonoBehaviour
         public override void Bake(BulletAuthoring authoring)
         {
             // 弾の GameObject を動的なエンティティに変換
-            var entity = GetEntity(authoring, TransformUsageFlags.Dynamic);
+            Entity entity = GetEntity(authoring, TransformUsageFlags.Dynamic);
             // Entity.Nullチェック
             if (entity == Entity.Null) return;
 

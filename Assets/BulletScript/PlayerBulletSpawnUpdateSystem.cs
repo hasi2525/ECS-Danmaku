@@ -32,15 +32,15 @@ public partial struct PlayerBulletSpawnUpdateSystem : ISystem
     void ISystem.OnUpdate(ref SystemState state)
     {
         // EntityManagerを取得して、エンティティのコンポーネントを管理
-        var entityManager = state.EntityManager;
+        EntityManager entityManager = state.EntityManager;
         // EntityCommandBufferを使用して、エンティティの作成やコンポーネントの変更をキューに入れ、一括で処理
-        var entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp, PlaybackPolicy.MultiPlayback);
+        EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Allocator.Temp, PlaybackPolicy.MultiPlayback);
 
         // 現在のフレームのデルタタイムを取得
-        var deltaTime = SystemAPI.Time.DeltaTime;
+        float deltaTime = SystemAPI.Time.DeltaTime;
         // クエリに一致するすべてのエンティティを配列として取得
         var entities = _entityQuery.ToEntityArray(Allocator.Temp);
-        foreach (var entity in entities)
+        foreach (Entity entity in entities)
         {
             // 弾の発射データを持つエンティティから、そのデータを取得
             var spawner = entityManager.GetComponentData<PlayerBulletSpawnData>(entity);
@@ -62,8 +62,8 @@ public partial struct PlayerBulletSpawnUpdateSystem : ISystem
                 entityManager.SetComponentData(entity, spawner);
 
                 // 弾のエンティティを生成します。弾の原型（プロトタイプ）から新しいエンティティをインスタンス化
-                var spawnerLtw = entityManager.GetComponentData<LocalToWorld>(entity);
-                var bulletEntity = entityCommandBuffer.Instantiate(spawner.BulletPrototype);
+                LocalToWorld spawnerLtw = entityManager.GetComponentData<LocalToWorld>(entity);
+                Entity bulletEntity = entityCommandBuffer.Instantiate(spawner.BulletPrototype);
 
                 // 弾の位置と回転を、発射元のエンティティに基づいて設定
                 var bulletTransform = LocalTransform.FromPositionRotation(spawnerLtw.Position, spawnerLtw.Rotation);
