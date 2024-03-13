@@ -7,10 +7,10 @@ using UnityEngine;
 // Burstコンパイラを使用して、このシステムの実行を最適化
 [BurstCompile]
 //[UpdateInGroup(typeof(SimulationCharaSystemGroup))]
-public partial struct PlayerBulletSpawnUpdateSystem : ISystem
+public partial struct EnemyBulletSpawnUpdateSystem : ISystem
 {
     // エンティティクエリを格納するためのプライベートフィールド
-    private EntityQuery _entityQuery; 
+    private EntityQuery _entityQuery;
 
     // システムの作成時に一度だけ呼び出されます。このシステムで必要なコンポーネントタイプを指定してクエリを構築
     [BurstCompile]
@@ -19,7 +19,7 @@ public partial struct PlayerBulletSpawnUpdateSystem : ISystem
         // 必要なコンポーネントタイプの配列を作成
         var components = new NativeArray<ComponentType>(2, Allocator.Temp);
         // 弾発射データの読み書きが可能なコンポーネント
-        components[0] = ComponentType.ReadWrite<PlayerBulletSpawnData>();
+        components[0] = ComponentType.ReadWrite<EnemyBulletSpawnData>();
         // 読み取り専用のローカルからワールドへの変換コンポーネント
         components[1] = ComponentType.ReadOnly<LocalToWorld>();
 
@@ -44,33 +44,28 @@ public partial struct PlayerBulletSpawnUpdateSystem : ISystem
         foreach (Entity entity in entities)
         {
             // 弾の発射データを持つエンティティから、そのデータを取得
-            PlayerBulletSpawnData spawner = entityManager.GetComponentData<PlayerBulletSpawnData>(entity);
+            EnemyBulletSpawnData spawner = entityManager.GetComponentData<EnemyBulletSpawnData>(entity);
 
-            //左クリックを押している間弾を発射
-            if (Input.GetMouseButton(0))
+            // 弾の発射間隔をカウントダウンします。
+            if (spawner.BulletSpawnCurrentTime > 0f)
             {
-                // 弾の発射間隔をカウントダウンします。
-                if (spawner.BulletSpawnCurrentTime > 0f)
-                {
-                    spawner.BulletSpawnCurrentTime -= deltaTime;
-                    entityManager.SetComponentData(entity, spawner);
-                    // まだ発射時間に達していない場合は、次のエンティティに移る
-                    continue;
-                }
-
-                // 発射時間に達したら、次の発射までの時間をリセット
-                spawner.BulletSpawnCurrentTime = spawner.BulletSpawnInterval;
+                spawner.BulletSpawnCurrentTime -= deltaTime;
                 entityManager.SetComponentData(entity, spawner);
-
-                // 弾のエンティティを生成します。弾の原型（プロトタイプ）から新しいエンティティをインスタンス化
-                LocalToWorld spawnerLtw = entityManager.GetComponentData<LocalToWorld>(entity);
-                Entity bulletEntity = entityCommandBuffer.Instantiate(spawner.BulletPrototype);
-
-                // 弾の位置と回転を、発射元のエンティティに基づいて設定
-                LocalTransform bulletTransform = LocalTransform.FromPositionRotation(spawnerLtw.Position, spawnerLtw.Rotation);
-                entityCommandBuffer.AddComponent(bulletEntity, bulletTransform);
+                // まだ発射時間に達していない場合は、次のエンティティに移る
+                continue;
             }
 
+            // 発射時間に達したら、次の発射までの時間をリセット
+            spawner.BulletSpawnCurrentTime = spawner.BulletSpawnInterval;
+            entityManager.SetComponentData(entity, spawner);
+
+            // 弾のエンティティを生成します。弾の原型（プロトタイプ）から新しいエンティティをインスタンス化
+            LocalToWorld spawnerLtw = entityManager.GetComponentData<LocalToWorld>(entity);
+            Entity bulletEntity = entityCommandBuffer.Instantiate(spawner.BulletPrototype);
+
+            // 弾の位置と回転を、発射元のエンティティに基づいて設定
+            LocalTransform bulletTransform = LocalTransform.FromPositionRotation(spawnerLtw.Position, spawnerLtw.Rotation);
+            entityCommandBuffer.AddComponent(bulletEntity, bulletTransform);
         }
 
         // EntityCommandBufferに溜まったコマンド（エンティティの生成やコンポーネントの追加など）を実行

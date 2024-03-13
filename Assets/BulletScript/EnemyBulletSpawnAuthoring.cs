@@ -6,25 +6,25 @@ using UnityEngine;
 /// このコンポーネントをGameObjectにアタッチしてUnityエディターから弾発射のプロパティを定義し、
 /// ECSの世界で利用するためにエンティティのデータとして変換
 /// </summary>
-public class PlayerBulletSpawnAuthoring : MonoBehaviour
+public class EnemyBulletSpawnAuthoring : MonoBehaviour
 {
     // 発射する弾のプレハブ
     [SerializeField]
     private GameObject bulletPrefab;
     // 弾を発射する間隔
     [SerializeField]
-    private float spawnInterval; 
+    private float spawnInterval;
 
     /// <summary>
     /// オーサリングデータをECSのコンポーネントデータに変換するためのBakerクラス
     /// </summary>
-    private class Baker : Baker<PlayerBulletSpawnAuthoring>
+    private class Baker : Baker<EnemyBulletSpawnAuthoring>
     {
         /// <summary>
         /// PlayerBulletSpawnAuthoringコンポーネントのデータをECSのコンポーネントデータに変換
         /// </summary>
         /// <param name="authoring">変換元のオーサリングコンポーネント</param>
-        public override void Bake(PlayerBulletSpawnAuthoring authoring)
+        public override void Bake(EnemyBulletSpawnAuthoring authoring)
         {
             // 弾のプレファブをECSのエンティティに変換
             Entity bulletPrototype = GetEntity(authoring.bulletPrefab, TransformUsageFlags.Dynamic);
@@ -35,13 +35,13 @@ public class PlayerBulletSpawnAuthoring : MonoBehaviour
             Entity entity = GetEntity(authoring, TransformUsageFlags.Dynamic);
 
             // 弾発射設定を持つコンポーネントデータを作成し、エンティティに追加
-            PlayerBulletSpawnData playerBulletSpawnData = new PlayerBulletSpawnData
+            EnemyBulletSpawnData playerBulletSpawnData = new EnemyBulletSpawnData
             {
                 BulletPrototype = bulletPrototype,
                 // 弾を発射する間隔
                 BulletSpawnInterval = authoring.spawnInterval,
                 // 発射までの現在のタイマーをリセット
-                BulletSpawnCurrentTime = 0f, 
+                BulletSpawnCurrentTime = 0f,
             };
             // エンティティにPlayerBulletSpawnDataコンポーネントを追加
             AddComponent(entity, playerBulletSpawnData);

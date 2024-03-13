@@ -22,6 +22,7 @@ public partial struct BulletUpdateSystem : ISystem
     [BurstCompile]
     void ISystem.OnCreate(ref SystemState state)
     {
+
         // コンポーネントタイプの配列を作成し、クエリ対象のコンポーネントを指定
         NativeArray<ComponentType> components = new NativeArray<ComponentType>(2, Allocator.Temp);
         components[0] = ComponentType.ReadWrite<BulletData>();
